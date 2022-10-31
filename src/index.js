@@ -1,17 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom/client";
+import { useState } from "react";
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const year = 2020;
+function Greeting() {
+  const [developer, setDeveloper] = useState({
+    language: "python",
+    experience: 0,
+    isEmployed: false,
+  });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+  return (
+    <div>
+      <h2>Hello world</h2>
+      <p>Welcome to React</p>
+      <p onClick={() => setDeveloper({ ...developer, language: "javascript" })}>
+        Change spoken language {developer.language}
+      </p>
+      <input
+        type="number"
+        onChange={(e) => {
+          setDeveloper({ ...developer, experience: e.target.value });
+        }}
+      />
+      <div>I have {developer.experience} years of experience</div>
+      <div
+        onClick={() =>
+          setDeveloper((prev) => {
+            return { ...prev, isEmployed: !prev.isEmployed };
+          })
+        }
+      >
+        I am {developer.isEmployed ? "Employed" : "Not employed"}
+      </div>
+    </div>
+  );
+}
+function Layout({ children }) {
+  return <div style={{ background: "goldenrod" }}>{children}</div>;
+}
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Layout>
+    <Greeting />
+  </Layout>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
